@@ -17,6 +17,7 @@ namespace Uav
 		Node* getNext();
 		
 		void setLocation(int x, int y);
+		void setLocation(Point);
 	private:
 		Point location;
 		Node *next;

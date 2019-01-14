@@ -23,6 +23,11 @@ void Uav::Node::setLocation(int x, int y)
 	location.setX(x);
 	location.setY(y);
 }
+void Uav::Node::setLocation(Point p)
+{
+	location.setX(p.getX());
+	location.setY(p.getY());
+}
 void Uav::Node::setNext(Node* n)
 {
 	next = n;

@@ -3,16 +3,16 @@
 #define POINT_H 1
 namespace Uav {
 	class Point {
-		double x;
-		double y;
+		int x;
+		int y;
 
 	public:
-		Point(double, double);
+		Point(int, int);
 		Point();
-		double getX();
-		double getY();
-		void setX(double);
-		void setY(double);
+		int getX();
+		int getY();
+		void setX(int);
+		void setY(int);
 	};
 }
 #endif
