@@ -3,7 +3,9 @@
 #define PERIMETER_H true
 
 #include "node.h"
+#include "vec2d.h"
 #include "canvas.h"
+
 namespace Uav
 {
 	class Perimeter
@@ -16,11 +18,17 @@ namespace Uav
 		void deleteLastNode();
 		Node* getNodeAt(int i);
 		void showNodes();
+		void close();
+		int length();
+		void createBounds();
+		void showBounds();
 
 	private:
+		bool closed;
 		Node *head;
 		Node *tail;
 		Canvas* canvas;
+		Vec2d* bounds;
 	};
 
 

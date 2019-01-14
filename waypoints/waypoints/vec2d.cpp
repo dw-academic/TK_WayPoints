@@ -1,7 +1,7 @@
 #include "vec2d.h"
 #include <iostream>
 
-Uav::Vec2d::Vec2d(double x1, double y1, double x2, double y2)
+Uav::Vec2d::Vec2d(int x1, int y1, int x2, int y2)
 {
 	setOriginX(x1);
 	setOriginY(y1);
@@ -15,35 +15,39 @@ Uav::Vec2d::Vec2d(Point p1, Point p2)
 	setX(p2.getX() - p1.getX());
 	setY(p2.getY() - p1.getY());
 }
-double Uav::Vec2d::getOriginX()
+Uav::Vec2d::Vec2d()
+{
+
+}
+int Uav::Vec2d::getOriginX()
 {
 	return originX;
 }
-double Uav::Vec2d::getOriginY()
+int Uav::Vec2d::getOriginY()
 {
 	return originY;
 }
-void Uav::Vec2d::setOriginX(double ox)
+void Uav::Vec2d::setOriginX(int ox)
 {
 	originX = ox;
 }
-void Uav::Vec2d::setOriginY(double oy)
+void Uav::Vec2d::setOriginY(int oy)
 {
 	originY = oy;
 }
-double Uav::Vec2d::getX()
+int Uav::Vec2d::getX()
 {
 	return x;
 }
-double Uav::Vec2d::getY()
+int Uav::Vec2d::getY()
 {
 	return y;
 }
-void Uav::Vec2d::setX(double xx)
+void Uav::Vec2d::setX(int xx)
 {
 	x = xx;
 }
-void Uav::Vec2d::setY(double yy)
+void Uav::Vec2d::setY(int yy)
 {
 	y = yy;
 }

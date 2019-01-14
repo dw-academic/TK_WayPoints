@@ -5,23 +5,24 @@
 
 namespace Uav {
 	class Vec2d {
-		double originX;
-		double originY;
-		double x;
-		double y;
+		int originX;
+		int originY;
+		int x;
+		int y;
 
 	public:
+		Vec2d();
 		Vec2d(Point, Point);
-		Vec2d(double, double, double, double);
-		double getOriginX();
-		double getOriginY();
-		void setOriginX(double);
-		void setOriginY(double);
-		double getX();
-		double getY();
+		Vec2d(int, int, int, int);
+		int getOriginX();
+		int getOriginY();
+		void setOriginX(int);
+		void setOriginY(int);
+		int getX();
+		int getY();
 		double getMagnitude();
-		void setX(double);
-		void setY(double);
+		void setX(int);
+		void setY(int);
 	};
 }
 

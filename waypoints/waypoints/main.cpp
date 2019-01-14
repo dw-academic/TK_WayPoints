@@ -36,6 +36,7 @@ int main()
 		}
 		else if (response == TK_CODE_GENERATE)
 		{
+			perimeter->showBounds();
 			canvas->UpdateToScreen();
 		}
 		else if (response == TK_CODE_LEFTCLICK)
@@ -43,7 +44,13 @@ int main()
 			int mx, my;
 			SDL_GetMouseState(&mx, &my);
 			perimeter->addNode(mx, my); // add point at mouse location
-			perimeter->showNodes();
+			canvas->UpdateToScreen();
+		}
+		else if (response == TK_CODE_RIGHTCLICK)
+		{
+			int mx, my;
+			SDL_GetMouseState(&mx, &my);
+			perimeter->close();
 			canvas->UpdateToScreen();
 		}
 	}
