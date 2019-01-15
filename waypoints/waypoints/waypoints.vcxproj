@@ -115,8 +115,10 @@
     <ClInclude Include="codes.h" />
     <ClInclude Include="perimeter.h" />
     <ClInclude Include="point.h" />
+    <ClInclude Include="tkmath.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="vec2d.h" />
+    <ClInclude Include="waypoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="node.cpp" />
@@ -124,8 +126,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="perimeter.cpp" />
     <ClCompile Include="point.cpp" />
+    <ClCompile Include="tkmath.cpp" />
     <ClCompile Include="triangle.cpp" />
     <ClCompile Include="vec2d.cpp" />
+    <ClCompile Include="waypoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

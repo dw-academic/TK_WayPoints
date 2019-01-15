@@ -1,5 +1,5 @@
 #include "perimeter.h"
-#include "canvas.h"
+#include "tkmath.h"
 #include <iostream>
 
 
@@ -224,6 +224,47 @@ int Uav::Perimeter::minY()
 	return min;
 }
 
+void Uav::Perimeter::createWaypoints()
+{
+	SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 128, 255, 255);
+
+
+	int l = length();
+	Point* ref = new Point(0, 0);
+	Point* prev = new Point(0, 0);
+	Point* tp = new Point(0, 0);
+
+	for (int index = 0; index < l; index++) // for each bounding line
+	{
+		
+		for (int i = minY()-5; i < maxY()+5; i += 5) // move through y levels
+		{
+			if ((i - bounds[index].getOriginY())*(i - (bounds[index].getOriginY() + bounds[index].getY())) < 0) // if bounds[index] crosses level i
+			{
+				for (int j = minX()-5; j <= maxX()+5; j++) // move through x values
+				{
+					tp->setX(j);
+					tp->setY(i);
+					ref->setY(i);
+
+					if (Tkmath::sameSideOfLine(*tp, *ref, bounds[index]) != Tkmath::sameSideOfLine(*prev, *ref, bounds[index]) && j != minX()-5)
+					{
+						for (int r = -1; r <= 1; r++)
+						{
+							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i + r);
+							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i - r);
+							SDL_RenderDrawPoint(canvas->getRenderer(), j, i + r);
+							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i);
+						}
+					}
+
+					prev->setX(tp->getX());
+					prev->setY(tp->getY());
+				}
+			}
+		}
+	}
+}
 Uav::Perimeter::~Perimeter()
 {
 }

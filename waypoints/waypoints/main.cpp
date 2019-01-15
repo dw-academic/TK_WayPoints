@@ -59,6 +59,12 @@ int main()
 			perimeter->fill();
 			canvas->UpdateToScreen();
 		}
+		else if (response == TK_CODE_NAVIGATE)
+		{
+
+			perimeter->createWaypoints();
+			canvas->UpdateToScreen();
+		}
 	}
 
 	if (TK_QUIT)

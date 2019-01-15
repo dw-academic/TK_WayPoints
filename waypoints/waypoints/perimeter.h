@@ -5,6 +5,7 @@
 #include "node.h"
 #include "vec2d.h"
 #include "canvas.h"
+#include "waypoint.h"
 
 namespace Uav
 {
@@ -27,6 +28,7 @@ namespace Uav
 		int maxY();
 		int minX();
 		int minY();
+		void createWaypoints();
 
 	private:
 		bool closed;
@@ -34,6 +36,8 @@ namespace Uav
 		Node *tail;
 		Canvas* canvas;
 		Vec2d* bounds;
+		Waypoint* start;
+		Waypoint* end;
 	};
 
 

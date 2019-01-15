@@ -5,7 +5,7 @@
 
 Uav::Canvas::Canvas(SDL_Renderer* r, SDL_Surface* s, SDL_Window* w, SDL_Event* e)
 {
-	w = SDL_CreateWindow("Flag Generator using Open Simplex Noise by Timothy Kersten (C) 2018", // create our window object reference by pointer
+	w = SDL_CreateWindow("Waypoint Algorithm Testing", // create our window object reference by pointer
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		TK_WINDOW_WIDTH, TK_WINDOW_HEIGHT,
@@ -95,6 +95,10 @@ int Uav::Canvas::GetAllEvents()
 		if (events->key.keysym.scancode == SDL_SCANCODE_F && events->key.state == SDL_PRESSED)
 		{
 			return TK_CODE_FILL;
+		}
+		if (events->key.keysym.scancode == SDL_SCANCODE_W && events->key.state == SDL_PRESSED)
+		{
+			return TK_CODE_NAVIGATE;
 		}
 		if (events->button.type == SDL_MOUSEBUTTONUP && events->button.clicks == 1 && events->button.button == SDL_BUTTON_LEFT)
 		{
