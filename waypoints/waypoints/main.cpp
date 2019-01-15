@@ -53,6 +53,12 @@ int main()
 			perimeter->close();
 			canvas->UpdateToScreen();
 		}
+		else if (response == TK_CODE_FILL)
+		{
+			
+			perimeter->fill();
+			canvas->UpdateToScreen();
+		}
 	}
 
 	if (TK_QUIT)

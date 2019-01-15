@@ -161,6 +161,69 @@ void Uav::Perimeter::createBounds()
 	bounds[l].setY(head->getLocation().getY() - tail->getLocation().getY());
 }
 
+void Uav::Perimeter::fill()
+{
+	SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 0, 255, 255);
+	for(int i = minY(); i < maxY(); i += 5)
+	{
+		SDL_RenderDrawLine(canvas->getRenderer(),
+			minX(), i, maxX(), i);
+	}
+}
+
+int Uav::Perimeter::maxX()
+{
+	int max = head->getLocation().getX();
+	Node *temp = new Node;
+	temp = head;
+	while (temp != nullptr)
+	{
+		if (temp->getLocation().getX() > max)
+			max = temp->getLocation().getX();
+		temp = temp->getNext();
+	}
+	return max;
+}
+int Uav::Perimeter::maxY()
+{
+	int max = head->getLocation().getY();
+	Node *temp = new Node;
+	temp = head;
+	while (temp != nullptr)
+	{
+		if (temp->getLocation().getY() > max)
+			max = temp->getLocation().getY();
+		temp = temp->getNext();
+	}
+	return max;
+}
+int Uav::Perimeter::minX()
+{
+	int min = head->getLocation().getX();
+	Node *temp = new Node;
+	temp = head;
+	while (temp != nullptr)
+	{
+		if (temp->getLocation().getX() < min)
+			min = temp->getLocation().getX();
+		temp = temp->getNext();
+	}
+	return min;
+}
+int Uav::Perimeter::minY()
+{
+	int min = head->getLocation().getY();
+	Node *temp = new Node;
+	temp = head;
+	while (temp != nullptr)
+	{
+		if (temp->getLocation().getY() < min)
+			min = temp->getLocation().getY();
+		temp = temp->getNext();
+	}
+	return min;
+}
+
 Uav::Perimeter::~Perimeter()
 {
 }

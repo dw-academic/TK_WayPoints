@@ -92,6 +92,10 @@ int Uav::Canvas::GetAllEvents()
 		{
 			return TK_CODE_GENERATE;
 		}
+		if (events->key.keysym.scancode == SDL_SCANCODE_F && events->key.state == SDL_PRESSED)
+		{
+			return TK_CODE_FILL;
+		}
 		if (events->button.type == SDL_MOUSEBUTTONUP && events->button.clicks == 1 && events->button.button == SDL_BUTTON_LEFT)
 		{
 			return TK_CODE_LEFTCLICK;
@@ -100,6 +104,7 @@ int Uav::Canvas::GetAllEvents()
 		{
 			return TK_CODE_RIGHTCLICK;
 		}
+
 		if (events->key.keysym.scancode >= SDL_SCANCODE_A && events->key.keysym.scancode <= SDL_SCANCODE_0 && events->key.keysym.scancode != SDL_SCANCODE_Q && events->key.state == SDL_PRESSED)
 		{
 			return events->key.keysym.scancode;

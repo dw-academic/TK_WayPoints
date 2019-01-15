@@ -22,6 +22,11 @@ namespace Uav
 		int length();
 		void createBounds();
 		void showBounds();
+		void fill();
+		int maxX();
+		int maxY();
+		int minX();
+		int minY();
 
 	private:
 		bool closed;
