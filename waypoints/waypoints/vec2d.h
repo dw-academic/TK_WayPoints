@@ -2,6 +2,7 @@
 #ifndef VEC2D_H
 #define VEC2D_H 1
 #include "point.h"
+#include <cmath>
 
 namespace Uav {
 	class Vec2d {

@@ -1,8 +1,13 @@
 #include "perimeter.h"
 #include "tkmath.h"
 #include <iostream>
-#include <Windows.h>
 
+
+#ifdef _WIN32
+#include <Windows.h>
+#elif __linux__
+#include <unistd.h>
+#endif
 void Uav::Perimeter::addNode(int x, int y)
 {
 	Node *temp = new Node;
@@ -260,7 +265,11 @@ void Uav::Perimeter::createWaypoints()
 							SDL_RenderDrawPoint(canvas->getRenderer(), j, i + r);
 							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i);
 							canvas->UpdateToScreen();
+#ifdef _WIN32
 							Sleep(10);
+#elif __linux__
+							usleep(10000);
+#endif
 						}
 					}
 
@@ -317,7 +326,11 @@ void Uav::Perimeter::printWaypoints()
 			SDL_RenderDrawPoint(canvas->getRenderer(), j, i + r);
 			SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i);
 			canvas->UpdateToScreen();
+#ifdef _WIN32
 			Sleep(10);
+#elif __linux__
+			usleep(10000);
+#endif
 		}
 		if (temp->getNext() != nullptr)
 			SDL_RenderDrawLine(canvas->getRenderer(),

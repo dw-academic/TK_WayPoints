@@ -1,7 +1,11 @@
 #pragma once
 #ifndef CANVAS_H
 #define CANVAS_H
+#ifdef _WIN32
 #include <SDL.h>
+#elif __linux__
+#include <SDL2/SDL.h>
+#endif
 #undef main
 #include "codes.h"
 #define TK_WINDOW_HEIGHT 505

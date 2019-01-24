@@ -15,7 +15,13 @@ int main()
 	SDL_RenderClear(canvas->getRenderer());
 
 	int response = 0;
-	printf("\n= Ready = \n");
+	if (canvas->getWindow() != NULL)
+		printf("\n= Ready = \n");
+	else
+	{
+		printf("ERROR CREATING WINDOW: %s\n", SDL_GetError());
+		return -1;
+	}
 	SDL_RestoreWindow(canvas->getWindow());
 	SDL_RenderClear(canvas->getRenderer());
 	Uav::Perimeter *perimeter = new Uav::Perimeter(canvas);
@@ -61,7 +67,7 @@ int main()
 
 	if (TK_QUIT)
 	{
-		SDL_Delay(500);
+		//SDL_Delay(500);
 		SDL_Quit();
 	}
 

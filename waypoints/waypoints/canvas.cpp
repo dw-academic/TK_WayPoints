@@ -10,6 +10,7 @@ Uav::Canvas::Canvas(SDL_Renderer* r, SDL_Surface* s, SDL_Window* w, SDL_Event* e
 		SDL_WINDOWPOS_UNDEFINED,
 		TK_WINDOW_WIDTH, TK_WINDOW_HEIGHT,
 		SDL_WINDOW_OPENGL);
+	std::cout << SDL_GetError() << std::endl;
 	SDL_MinimizeWindow(w);
 	r = SDL_CreateRenderer(w, -1, 0);
 	renderer = r;
