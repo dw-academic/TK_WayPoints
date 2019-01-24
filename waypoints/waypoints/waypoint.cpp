@@ -33,6 +33,12 @@ void Uav::Waypoint::swap()
 	next->setLocation(t);
 }
 
+void Uav::Waypoint::swapNexts()
+{
+	Point tn = next->getLocation();
+	next->setLocation(next->getNext()->getLocation());
+	next->getNext()->setLocation(tn);
+}
 
 void Uav::Waypoint::setLocation(int x, int y)
 {

@@ -4,7 +4,7 @@
 
 
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #elif __linux__
 #include <unistd.h>
 #endif
@@ -150,7 +150,6 @@ int Uav::Perimeter::length()
 
 void Uav::Perimeter::createBounds()
 {
-	// TODO: Completely rework the way of making bounds
 	int l = length();
 	bounds = new Vec2d[l+1];
 	Node* origin = head;
@@ -296,27 +295,49 @@ void Uav::Perimeter::orderWaypoints()
 			{
 
 				temp->swap();
-				std::cout << "Swapping " << temp << " with " << temp->getNext() << std::endl;
 				isSorted = false;
+				
 			}
 			temp = temp->getNext();
 		}
 	} while (!isSorted);
-	std::cout << "Sorted" << std::endl;
+	
+	isSorted = false;
+	do {
+		isSorted = true;
+		temp = start;
+		while (temp != nullptr && temp->getNext() != nullptr)
+		{
+			if (temp->getLocation().getY() != temp->getNext()->getLocation().getY())
+			{
+				int diffToNext, diffToNextNext;
+				diffToNext = temp->getNext()->getLocation().getX() - temp->getLocation().getX();
+				diffToNextNext = temp->getNext()->getNext()->getLocation().getX() - temp->getLocation().getX();
+
+				if (diffToNext*diffToNext > diffToNextNext*diffToNextNext)
+				{
+					temp->swapNexts();
+					isSorted = false;
+				}
+				
+			}
+			temp = temp->getNext();
+		}
+	} while (!isSorted);
 	printWaypoints();
 }
 
 void Uav::Perimeter::printWaypoints()
 {
 	SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 255, 255, 255);
-	//wSDL_RenderClear(canvas->getRenderer());
+	SDL_RenderClear(canvas->getRenderer());
 	Waypoint *temp = new Waypoint;
 	temp = start;
 	while (temp != nullptr)
 	{
 		int j = temp->getLocation().getX();
 		int i = temp->getLocation().getY();
-		//std::cout << temp->getLocation().getX() << "," << temp->getLocation().getY() << std::endl;
+		std::cout << temp->getLocation().getX() << "," << temp->getLocation().getY() << std::endl;
 		
 		SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 128, 0, 255);
 		for (int r = -1; r <= 1; r++)
@@ -325,12 +346,7 @@ void Uav::Perimeter::printWaypoints()
 			SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i - r);
 			SDL_RenderDrawPoint(canvas->getRenderer(), j, i + r);
 			SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i);
-			canvas->UpdateToScreen();
-#ifdef _WIN32
-			Sleep(10);
-#elif __linux__
-			usleep(10000);
-#endif
+
 		}
 		if (temp->getNext() != nullptr)
 			SDL_RenderDrawLine(canvas->getRenderer(),
@@ -340,6 +356,11 @@ void Uav::Perimeter::printWaypoints()
 				temp->getNext()->getLocation().getY());
 		canvas->UpdateToScreen();
 		temp = temp->getNext();
+#ifdef _WIN32
+		Sleep(10);
+#elif __linux__
+		usleep(10000);
+#endif
 	}
 }
 
