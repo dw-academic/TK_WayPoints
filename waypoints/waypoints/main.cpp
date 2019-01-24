@@ -48,21 +48,13 @@ int main()
 		}
 		else if (response == TK_CODE_RIGHTCLICK)
 		{
-			int mx, my;
-			SDL_GetMouseState(&mx, &my);
 			perimeter->close();
-			canvas->UpdateToScreen();
-		}
-		else if (response == TK_CODE_FILL)
-		{
-			
-			perimeter->fill();
 			canvas->UpdateToScreen();
 		}
 		else if (response == TK_CODE_NAVIGATE)
 		{
-
 			perimeter->createWaypoints();
+			perimeter->orderWaypoints();
 			canvas->UpdateToScreen();
 		}
 	}

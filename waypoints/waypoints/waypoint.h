@@ -17,6 +17,7 @@ namespace Uav {
 		Point getLocation();
 		void setNext(Waypoint*);
 		Waypoint* getNext();
+		void swap();
 
 		void setLocation(int x, int y);
 		void setLocation(Point);

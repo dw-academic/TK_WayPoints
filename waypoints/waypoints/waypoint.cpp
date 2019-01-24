@@ -25,6 +25,15 @@ Uav::Point Uav::Waypoint::getLocation()
 {
 	return location;
 }
+
+void Uav::Waypoint::swap()
+{
+	Point t = getLocation();
+	setLocation(next->getLocation());
+	next->setLocation(t);
+}
+
+
 void Uav::Waypoint::setLocation(int x, int y)
 {
 	location.setX(x);

@@ -16,6 +16,8 @@ namespace Uav
 		~Perimeter();
 		void addNode(int x, int y);
 		void addNode(Point p);
+		void addWaypoint(int x, int y);
+		void addWaypoint(Point p);
 		void deleteLastNode();
 		Node* getNodeAt(int i);
 		void showNodes();
@@ -29,9 +31,12 @@ namespace Uav
 		int minX();
 		int minY();
 		void createWaypoints();
+		void orderWaypoints();
+		void printWaypoints();
 
 	private:
 		bool closed;
+		bool bounded;
 		Node *head;
 		Node *tail;
 		Canvas* canvas;
