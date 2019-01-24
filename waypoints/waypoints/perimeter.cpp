@@ -4,7 +4,7 @@
 
 
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #elif __linux__
 #include <unistd.h>
 #endif
@@ -298,18 +298,40 @@ void Uav::Perimeter::orderWaypoints()
 				temp->swap();
 				std::cout << "Swapping " << temp << " with " << temp->getNext() << std::endl;
 				isSorted = false;
+				
 			}
 			temp = temp->getNext();
 		}
 	} while (!isSorted);
-	std::cout << "Sorted" << std::endl;
+	std::cout << "Presorted" << std::endl;
+	isSorted = false;
+	do {
+		isSorted = true;
+		temp = start;
+		while (temp != nullptr && temp->getNext() != nullptr && temp->getNext()->getNext() != nullptr)
+		{
+
+			if (temp->getNext()->getLocation().getY() != temp->getLocation().getY())
+			{
+
+				if (fabs(temp->getNext()->getLocation().getX() - temp->getLocation().getX())
+					<
+					fabs(temp->getNext()->getNext()->getLocation().getX() - temp->getLocation().getX()))
+				std::cout << "Swapping " << temp << " with " << temp->getNext() << std::endl;
+				temp->swapNexts();
+				isSorted = false;
+
+			}
+			temp = temp->getNext();
+		}
+	} while (!isSorted);
 	printWaypoints();
 }
 
 void Uav::Perimeter::printWaypoints()
 {
 	SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 255, 255, 255);
-	//wSDL_RenderClear(canvas->getRenderer());
+	SDL_RenderClear(canvas->getRenderer());
 	Waypoint *temp = new Waypoint;
 	temp = start;
 	while (temp != nullptr)
