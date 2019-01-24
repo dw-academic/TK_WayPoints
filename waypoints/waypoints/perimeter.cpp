@@ -308,7 +308,6 @@ void Uav::Perimeter::orderWaypoints()
 		temp = start;
 		while (temp != nullptr && temp->getNext() != nullptr)
 		{
-			std::cout << "post sorting\n";
 			if (temp->getLocation().getY() != temp->getNext()->getLocation().getY())
 			{
 				int diffToNext, diffToNextNext;
@@ -319,7 +318,6 @@ void Uav::Perimeter::orderWaypoints()
 				{
 					temp->swapNexts();
 					isSorted = false;
-					std::cout << "swapping\n";
 				}
 				
 			}
