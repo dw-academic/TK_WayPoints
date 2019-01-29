@@ -36,7 +36,3 @@ Uav::Node* Uav::Node::getNext()
 {
 		return next;
 }
-Uav::Node::~Node()
-{
-
-}

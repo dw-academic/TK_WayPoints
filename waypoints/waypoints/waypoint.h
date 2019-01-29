@@ -13,7 +13,10 @@ namespace Uav {
 		Waypoint(int x, int y);
 		Waypoint(Point);
 		Waypoint(Node*);
-		~Waypoint();
+		Waypoint::~Waypoint()
+		{
+			delete next;
+		}
 		Point getLocation();
 		void setNext(Waypoint*);
 		Waypoint* getNext();
