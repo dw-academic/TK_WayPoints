@@ -254,7 +254,9 @@ void Uav::Perimeter::createWaypoints()
 					tp->setY(i);
 					ref->setY(i);
 
-					if (Tkmath::sameSideOfLine(*tp, *ref, bounds[index]) != Tkmath::sameSideOfLine(*prev, *ref, bounds[index]) && j != minX()-5)
+					if (Tkmath::sameSideOfLine(*tp, *ref, bounds[index]) != Tkmath::sameSideOfLine(*prev, *ref, bounds[index]) && j != minX() - 5
+						|| (i == bounds[index].getOriginY() && j == bounds[index].getOriginX())
+						|| (i == bounds[index].getOriginY() + bounds[index].getY() && j == bounds[index].getOriginX() + bounds[index].getX() ) )
 					{
 						addWaypoint(j, i);
 						for (int r = -1; r <= 1; r++)
@@ -306,7 +308,7 @@ void Uav::Perimeter::orderWaypoints()
 	do {
 		isSorted = true;
 		temp = start;
-		while (temp != nullptr && temp->getNext() != nullptr)
+		while (temp != nullptr && temp->getNext() != nullptr && temp->getNext()->getNext() != nullptr)
 		{
 			if (temp->getLocation().getY() != temp->getNext()->getLocation().getY())
 			{
