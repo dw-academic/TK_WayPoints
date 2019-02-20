@@ -248,7 +248,10 @@ void Uav::Perimeter::createWaypoints()
 		{
 			SDL_SetRenderDrawColor(canvas->getRenderer(), 200, 228, 0, 255);
 			SDL_RenderDrawLine(canvas->getRenderer(), 0, i, TK_WINDOW_WIDTH, i);
-			if ((i - bounds[index].getOriginY())*(i - (bounds[index].getOriginY() + bounds[index].getY())) < 0) // if bounds[index] crosses level i
+			if ((i - bounds[index].getOriginY())*(i - (bounds[index].getOriginY() + bounds[index].getY())) < 0
+				|| (i == bounds[index].getOriginY() + bounds[index].getY())
+				|| (i == bounds[index].getOriginY())
+					) // if bounds[index] crosses level i
 			{
 				for (int j = minX()-5; j <= maxX()+5; j++) // move through x values
 				{
@@ -342,7 +345,7 @@ void Uav::Perimeter::printWaypoints()
 	{
 		int j = temp->getLocation().getX();
 		int i = temp->getLocation().getY();
-		//std::cout << temp->getLocation().getX() << "," << temp->getLocation().getY() << std::endl;
+		std::cout << temp->getLocation().getX() << "," << temp->getLocation().getY() << std::endl;
 		
 		SDL_SetRenderDrawColor(canvas->getRenderer(), 20, 0, 255, 255);
 		for (int r = -1; r <= 1; r++)
