@@ -58,7 +58,3 @@ Uav::Waypoint* Uav::Waypoint::getNext()
 {
 	return next;
 }
-Uav::Waypoint::~Waypoint()
-{
-
-}

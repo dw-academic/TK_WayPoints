@@ -246,7 +246,12 @@ void Uav::Perimeter::createWaypoints()
 		
 		for (int i = minY()-5; i < maxY()+5; i += 15) // move through y levels
 		{
-			if ((i - bounds[index].getOriginY())*(i - (bounds[index].getOriginY() + bounds[index].getY())) < 0) // if bounds[index] crosses level i
+			SDL_SetRenderDrawColor(canvas->getRenderer(), 200, 228, 0, 255);
+			SDL_RenderDrawLine(canvas->getRenderer(), 0, i, TK_WINDOW_WIDTH, i);
+			if ((i - bounds[index].getOriginY())*(i - (bounds[index].getOriginY() + bounds[index].getY())) < 0
+				|| (i == bounds[index].getOriginY() + bounds[index].getY())
+				|| (i == bounds[index].getOriginY())
+					) // if bounds[index] crosses level i
 			{
 				for (int j = minX()-5; j <= maxX()+5; j++) // move through x values
 				{
@@ -254,8 +259,11 @@ void Uav::Perimeter::createWaypoints()
 					tp->setY(i);
 					ref->setY(i);
 
-					if (Tkmath::sameSideOfLine(*tp, *ref, bounds[index]) != Tkmath::sameSideOfLine(*prev, *ref, bounds[index]) && j != minX()-5)
+					if ( Tkmath::sameSideOfLine(*tp, *ref, bounds[index]) != Tkmath::sameSideOfLine(*prev, *ref, bounds[index]) && j != minX() - 5	// crossed a boundary
+						|| (i == bounds[index].getOriginY() && j == bounds[index].getOriginX() )													// or j,i is a boundary origin
+						|| (i == bounds[index].getOriginY() + bounds[index].getY() && j == bounds[index].getOriginX() + bounds[index].getX() ) )	// or j,i is a boundary destination
 					{
+						SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 128, 255, 255);
 						addWaypoint(j, i);
 						for (int r = -1; r <= 1; r++)
 						{
@@ -263,13 +271,9 @@ void Uav::Perimeter::createWaypoints()
 							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i - r);
 							SDL_RenderDrawPoint(canvas->getRenderer(), j, i + r);
 							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i);
-							canvas->UpdateToScreen();
-#ifdef _WIN32
-							Sleep(10);
-#elif __linux__
-							usleep(10000);
-#endif
+
 						}
+						canvas->UpdateToScreen();
 					}
 
 					prev->setX(tp->getX());
@@ -278,6 +282,10 @@ void Uav::Perimeter::createWaypoints()
 			}
 		}
 	}
+	
+	delete tp;
+	delete ref;
+	delete prev;
 }
 
 void Uav::Perimeter::orderWaypoints()
@@ -306,7 +314,7 @@ void Uav::Perimeter::orderWaypoints()
 	do {
 		isSorted = true;
 		temp = start;
-		while (temp != nullptr && temp->getNext() != nullptr)
+		while (temp != nullptr && temp->getNext() != nullptr && temp->getNext()->getNext() != nullptr)
 		{
 			if (temp->getLocation().getY() != temp->getNext()->getLocation().getY())
 			{
@@ -330,7 +338,7 @@ void Uav::Perimeter::orderWaypoints()
 void Uav::Perimeter::printWaypoints()
 {
 	SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 255, 255, 255);
-	SDL_RenderClear(canvas->getRenderer());
+	//SDL_RenderClear(canvas->getRenderer());
 	Waypoint *temp = new Waypoint;
 	temp = start;
 	while (temp != nullptr)
@@ -339,7 +347,7 @@ void Uav::Perimeter::printWaypoints()
 		int i = temp->getLocation().getY();
 		std::cout << temp->getLocation().getX() << "," << temp->getLocation().getY() << std::endl;
 		
-		SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 128, 0, 255);
+		SDL_SetRenderDrawColor(canvas->getRenderer(), 20, 0, 255, 255);
 		for (int r = -1; r <= 1; r++)
 		{
 			SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i + r);
@@ -356,16 +364,6 @@ void Uav::Perimeter::printWaypoints()
 				temp->getNext()->getLocation().getY());
 		canvas->UpdateToScreen();
 		temp = temp->getNext();
-#ifdef _WIN32
-		Sleep(10);
-#elif __linux__
-		usleep(10000);
-#endif
+		SDL_Delay(10);
 	}
-}
-
-
-
-Uav::Perimeter::~Perimeter()
-{
 }

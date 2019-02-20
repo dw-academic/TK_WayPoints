@@ -13,7 +13,6 @@ namespace Uav
 	{
 	public:
 		Perimeter(Canvas*);
-		~Perimeter();
 		void addNode(int x, int y);
 		void addNode(Point p);
 		void addWaypoint(int x, int y);
@@ -33,6 +32,16 @@ namespace Uav
 		void createWaypoints();
 		void orderWaypoints();
 		void printWaypoints();
+
+		Perimeter::~Perimeter()
+		{
+			delete head;
+			delete tail;
+			delete canvas;
+			delete bounds;
+			delete start;
+			delete end;
+		}
 
 	private:
 		bool closed;

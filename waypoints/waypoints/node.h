@@ -11,18 +11,22 @@ namespace Uav
 		Node();
 		Node(int x, int y);
 		Node(Point);
-		~Node();
 		Point getLocation();
 		void setNext(Node*);
 		Node* getNext();
 		
 		void setLocation(int x, int y);
 		void setLocation(Point);
+
+		Node::~Node()
+		{
+			delete next;
+		}
 	private:
 		Point location;
 		Node *next;
 	};
-
+	
 }
 
 #endif

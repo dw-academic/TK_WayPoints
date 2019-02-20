@@ -1,6 +1,6 @@
 #include "point.h"
 
-Uav::Point::Point(int lx=0, int ly=0)
+Uav::Point::Point(double lx=0, double ly=0)
 {
 	x = lx;
 	y = ly;
@@ -10,21 +10,21 @@ Uav::Point::Point()
 	x = 0;
 	y = 0;
 }
-void Uav::Point::setX(int lx)
+void Uav::Point::setX(double lx)
 {
 	x = lx;
 }
-void Uav::Point::setY(int ly)
+void Uav::Point::setY(double ly)
 {
 	y = ly;
 }
 
-int Uav::Point::getX()
+double Uav::Point::getX()
 {
 	return x;
 }
 
-int Uav::Point::getY()
+double Uav::Point::getY()
 {
 	return y;
 }
