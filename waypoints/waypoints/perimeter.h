@@ -4,7 +4,7 @@
 
 #include "node.h"
 #include "vec2d.h"
-#include "canvas.h"
+
 #include "waypoint.h"
 
 namespace Uav
@@ -12,18 +12,18 @@ namespace Uav
 	class Perimeter
 	{
 	public:
-		Perimeter(Canvas*);
+		Perimeter();
 		void addNode(int x, int y);
 		void addNode(Point p);
 		void addWaypoint(int x, int y);
 		void addWaypoint(Point p);
-		void deleteLastNode();
+
 		Node* getNodeAt(int i);
-		void showNodes();
+
 		void close();
 		int length();
 		void createBounds();
-		void showBounds();
+
 		void fill();
 		int maxX();
 		int maxY();
@@ -48,7 +48,7 @@ namespace Uav
 		bool bounded;
 		Node *head;
 		Node *tail;
-		Canvas* canvas;
+
 		Vec2d* bounds;
 		Waypoint* start;
 		Waypoint* end;

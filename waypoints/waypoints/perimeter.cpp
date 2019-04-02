@@ -25,7 +25,7 @@ void Uav::Perimeter::addNode(int x, int y)
 		tail = temp;
 		tail->setLocation(temp->getLocation());
 	}
-	showNodes();
+
 }
 
 void Uav::Perimeter::addNode(Point p)
@@ -57,10 +57,7 @@ void Uav::Perimeter::addWaypoint(Point p)
 	addWaypoint(p.getX(), p.getY());
 }
 
-void Uav::Perimeter::deleteLastNode()
-{
-	showNodes();
-}
+
 
 Uav::Node* Uav::Perimeter::getNodeAt(int i)
 {
@@ -79,49 +76,10 @@ Uav::Node* Uav::Perimeter::getNodeAt(int i)
 	return temp;
 }
 
-void Uav::Perimeter::showNodes()
-{
-	SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 255, 255, 255);
-	SDL_RenderClear(canvas->getRenderer());
-	Node *temp = new Node;
-	temp = head;
-	while (temp != nullptr)
-	{
-		SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 0, 0, 255);
-		SDL_RenderDrawLine(canvas->getRenderer(),
-			temp->getLocation().getX() - 4,
-			temp->getLocation().getY() - 4,
-			temp->getLocation().getX() + 4,
-			temp->getLocation().getY() + 4);
-		SDL_RenderDrawLine(canvas->getRenderer(),
-			temp->getLocation().getX() - 4,
-			temp->getLocation().getY() + 4,
-			temp->getLocation().getX() + 4,
-			temp->getLocation().getY() - 4);
-		temp = temp->getNext();
-	}
-}
 
-void Uav::Perimeter::showBounds()
-{
-	int l = length();
-	SDL_SetRenderDrawColor(canvas->getRenderer(), 0, 255, 0, 255);
-	createBounds();
-	for (int i = 0; i <= l; i++)
-	{
-		SDL_RenderDrawLine(canvas->getRenderer(),
-			bounds[i].getOriginX(),
-			bounds[i].getOriginY(),
-			bounds[i].getOriginX() + bounds[i].getX(),
-			bounds[i].getOriginY() + bounds[i].getY()
-		);
-	}
 
-}
-
-Uav::Perimeter::Perimeter(Canvas* c)
+Uav::Perimeter::Perimeter()
 {
-	canvas = c;
 	head = nullptr;
 	tail = nullptr;
 	closed = false;
@@ -131,7 +89,6 @@ Uav::Perimeter::Perimeter(Canvas* c)
 void Uav::Perimeter::close()
 {
 	closed = true;
-	showNodes();
 }
 
 int Uav::Perimeter::length()
@@ -235,7 +192,6 @@ void Uav::Perimeter::createWaypoints()
 	if (!bounded)
 		showBounds();
 
-	SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 128, 255, 255);
 	int l = length();
 	Point* ref = new Point(0, 0);
 	Point* prev = new Point(0, 0);
@@ -246,8 +202,6 @@ void Uav::Perimeter::createWaypoints()
 		
 		for (int i = minY()-5; i < maxY()+5; i += 15) // move through y levels
 		{
-			SDL_SetRenderDrawColor(canvas->getRenderer(), 200, 228, 0, 255);
-			SDL_RenderDrawLine(canvas->getRenderer(), 0, i, TK_WINDOW_WIDTH, i);
 			if ((i - bounds[index].getOriginY())*(i - (bounds[index].getOriginY() + bounds[index].getY())) < 0
 				|| (i == bounds[index].getOriginY() + bounds[index].getY())
 				|| (i == bounds[index].getOriginY())
@@ -262,20 +216,8 @@ void Uav::Perimeter::createWaypoints()
 					if ( Tkmath::sameSideOfLine(*tp, *ref, bounds[index]) != Tkmath::sameSideOfLine(*prev, *ref, bounds[index]) && j != minX() - 5	// crossed a boundary
 						|| (i == bounds[index].getOriginY() && j == bounds[index].getOriginX() )													// or j,i is a boundary origin
 						|| (i == bounds[index].getOriginY() + bounds[index].getY() && j == bounds[index].getOriginX() + bounds[index].getX() ) )	// or j,i is a boundary destination
-					{
-						SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 128, 255, 255);
-						addWaypoint(j, i);
-						for (int r = -1; r <= 1; r++)
-						{
-							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i + r);
-							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i - r);
-							SDL_RenderDrawPoint(canvas->getRenderer(), j, i + r);
-							SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i);
-
-						}
-						canvas->UpdateToScreen();
-					}
-
+			
+			
 					prev->setX(tp->getX());
 					prev->setY(tp->getY());
 				}
@@ -337,8 +279,7 @@ void Uav::Perimeter::orderWaypoints()
 
 void Uav::Perimeter::printWaypoints()
 {
-	SDL_SetRenderDrawColor(canvas->getRenderer(), 255, 255, 255, 255);
-	//SDL_RenderClear(canvas->getRenderer());
+
 	Waypoint *temp = new Waypoint;
 	temp = start;
 	while (temp != nullptr)
@@ -347,23 +288,9 @@ void Uav::Perimeter::printWaypoints()
 		int i = temp->getLocation().getY();
 		std::cout << temp->getLocation().getX() << "," << temp->getLocation().getY() << std::endl;
 		
-		SDL_SetRenderDrawColor(canvas->getRenderer(), 20, 0, 255, 255);
-		for (int r = -1; r <= 1; r++)
-		{
-			SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i + r);
-			SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i - r);
-			SDL_RenderDrawPoint(canvas->getRenderer(), j, i + r);
-			SDL_RenderDrawPoint(canvas->getRenderer(), j + r, i);
 
-		}
-		if (temp->getNext() != nullptr)
-			SDL_RenderDrawLine(canvas->getRenderer(),
-				temp->getLocation().getX(),
-				temp->getLocation().getY(),
-				temp->getNext()->getLocation().getX(),
-				temp->getNext()->getLocation().getY());
-		canvas->UpdateToScreen();
+
 		temp = temp->getNext();
-		SDL_Delay(10);
+
 	}
 }
